@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "179602611484",
+    "project_id": "practicainsta-ed20b",
+    "storage_bucket": "practicainsta-ed20b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179602611484:android:533895986bf203be7c6ed9",
+        "android_client_info": {
+          "package_name": "com.example.flutter_actividad02"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcwFxi_pwGIHmhyeflGxqu76_CkS5wNRM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -85,27 +86,6 @@ class _LoginState extends State<Login> {
                           const SizedBox(
                             height: 34,
                           ),
-                          SizedBox(
-                            height: 48,
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  print("Email ${_emailController.text}");
-                                  print("Password ${_passwordContorller.text}");
-                                }
-                              },
-                              style: OutlinedButton.styleFrom(
-                                  backgroundColor: const Color.fromARGB(255, 151, 112, 195),
-                                  foregroundColor: const Color.fromARGB(255, 251, 250, 250),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16))),
-                              child: const Text(
-                                "Iniciar sesión",
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ),
-                          ),
                           const SizedBox(
                             height: 12,
                           ),
@@ -115,6 +95,52 @@ class _LoginState extends State<Login> {
                             },
                             child: const Text('Recuperar contraseña'),
                           ),
+                          SizedBox(
+                  height: 48,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        try {
+                          final credential = await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: _emailController.text,
+                                  password: _passwordContorller.text);
+                          print("Credencial: ${credential}");
+                          Navigator.pushReplacementNamed(context, '/Proflie');
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'user-not-found') {
+                            print('No user found for that email.');
+                          } else if (e.code == 'wrong-password') {
+                            print('Wrong password provided for that user.');
+                          }
+                        }
+                      }
+                    },
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 151, 112, 195),
+                      foregroundColor: const Color.fromARGB(255, 251, 250, 250),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: const Text(
+                      "Iniciar sesión",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                InkWell(
+                  onTap: () => Navigator.pushNamed(context, '/register'),
+                  child: const Text(
+                    "Registrarase",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 80, 80, 80),
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
                         ])))));
   }
 }
